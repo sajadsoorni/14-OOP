@@ -85,7 +85,6 @@ DATA CAR 1: 'BMW' going at 120 km/h
 DATA CAR 2: 'Mercedes' going at 95 km/h
 
 GOOD LUCK 😀
-*/
 
 const Car = function (make, speed) {
   this.make = make;
@@ -109,3 +108,39 @@ ford.accelerate();
 ford.accelerate();
 ford.brake();
 ford.accelerate();
+
+*/
+// class expression
+// const PersonCl = class {};
+
+// class declaration
+class PersonCl {
+  constructor(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  }
+
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  }
+
+  greet() {
+    console.log(`Hey ${this.firstName}`);
+  }
+}
+
+const jessica = new PersonCl('Jessica', 1996);
+console.log(jessica);
+jessica.calcAge();
+
+console.log(jessica.__proto__ === PersonCl.prototype);
+
+// PersonCl.prototype.greet = function () {
+//   console.log(`Hey ${this.firstName}`);
+// };
+
+jessica.greet();
+
+// 1. Classes are NOT hoisted
+// 2. Classes are first-class citizen
+// 3. Classes are executed in strict mode
