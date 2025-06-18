@@ -1,5 +1,5 @@
 'use strict';
-/*
+
 const Person = function (firstName, birthYear) {
   // Instance properties
   this.firstName = firstName;
@@ -24,6 +24,13 @@ const jack = new Person('Jack', 1975);
 console.log(matilda, jack);
 
 console.log(jonas instanceof Person);
+
+Person.hey = function () {
+  console.log('Hey there 🙋‍♂️');
+  console.log(this);
+};
+Person.hey();
+// jonas.hey(); // we cannot say Jonas.hey because it is simply not in the prototype of the Jonas object.
 
 // Prototype
 console.log(Person.prototype);
@@ -70,7 +77,6 @@ console.log(arr.unique());
 
 const h1 = document.querySelector('h1');
 console.dir(x => x + 1);
-*/
 
 ///////////////////////////////////////
 // Coding Challenge #1
@@ -120,6 +126,8 @@ class PersonCl {
     this.birthYear = birthYear;
   }
 
+  // Instance method
+  // Method will be added to .prototype property
   calcAge() {
     console.log(2037 - this.birthYear);
   }
@@ -142,6 +150,12 @@ class PersonCl {
   get fullName() {
     return this._fullName;
   }
+
+  // Static method
+  static hey() {
+    console.log('Hey there 🙋‍♂️');
+    console.log(this);
+  }
 }
 
 const jessica = new PersonCl('Jessica Davies ', 1996);
@@ -162,6 +176,8 @@ jessica.greet();
 // 3. Classes are executed in strict mode
 
 const walter = new PersonCl('Walter White', 1965);
+
+PersonCl.hey();
 
 const account = {
   owner: 'jonas',
