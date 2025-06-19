@@ -184,6 +184,7 @@ PersonCl.hey();
 const account = {
   owner: 'jonas',
   movements: [200, 530, 120, 300],
+
   get latest() {
     return this.movements.slice(-1).pop();
   },
@@ -198,7 +199,7 @@ console.log(account.latest);
 account.latest = 50;
 console.log(account.movements);
 */
-
+/*
 const PersonProto = {
   calcAge() {
     console.log(2037 - this.birthYear);
@@ -221,7 +222,7 @@ console.log(steven.__proto__ === PersonProto);
 const sarah = Object.create(PersonProto);
 sarah.init('Sarah', 1979);
 sarah.calcAge();
-
+*/
 ///////////////////////////////////////
 // Coding Challenge #2
 
@@ -234,28 +235,27 @@ sarah.calcAge();
 DATA CAR 1: 'Ford' going at 120 km/h
 
 GOOD LUCK 😀
-*/
-
+console.log('////////////////////////');
 class CarCl {
   constructor(make, speed) {
     this.make = make;
     this.speed = speed;
   }
-
+  
   accelerate() {
     this.speed += 10;
     console.log(`${this.make} is going at ${this.speed}km/h`);
   }
-
+  
   brake() {
     this.speed -= 5;
     console.log(`${this.make} is going at ${this.speed}km/h`);
   }
-
+  
   get speedUS() {
     return this.speed / 1.6;
   }
-
+  
   set speedUS(speed) {
     this.speed = speed * 1.6;
   }
@@ -268,3 +268,42 @@ ford.accelerate();
 ford.brake();
 ford.speedUS = 50;
 console.log(ford);
+*/
+
+///////////////////////////////////////
+// Inheritance Between "Classes": Constructor Functions
+
+const Person = function (firstName, birthYear) {
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+};
+
+Person.prototype.calcAge = function () {
+  console.log(2037 - this.birthYear);
+};
+
+const Student = function (firstName, birthYear, course) {
+  Person.call(this, firstName, birthYear);
+  this.course = course;
+};
+
+// Linking prototype
+Student.prototype = Object.create(Person.prototype);
+
+Student.prototype.introduce = function () {
+  console.log(`My name is ${this.firstName} and I study ${this.course}`);
+};
+
+const mike = new Student('Mike', 2020, 'Computer Science');
+mike.introduce();
+mike.calcAge();
+
+console.log(mike.__proto__);
+console.log(mike.__proto__.__proto__);
+
+console.log(mike instanceof Student);
+console.log(mike instanceof Person);
+console.log(mike instanceof Object);
+
+Student.prototype.constructor = Student;
+console.dir(Student.prototype.constructor);
