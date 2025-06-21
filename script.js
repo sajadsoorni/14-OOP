@@ -537,14 +537,17 @@ class Account {
   // Public interface (API)
   getMovements() {
     return this.#movements;
+    // Not chainable
   }
 
   deposit(val) {
     this.#movements.push(val);
+    return this;
   }
 
   withdraw(val) {
     this.deposit(-val);
+    return this;
   }
 
   #approveLoan(val) {
@@ -553,10 +556,11 @@ class Account {
   }
 
   requestLoan(val) {
-    if (this.approveLoan(val)) {
+    if (this.#approveLoan(val)) {
       this.deposit(val);
       console.log(`Loan approved`);
     }
+    return this;
   }
 
   static #test() {
@@ -565,13 +569,17 @@ class Account {
 }
 
 const acc1 = new Account('Jonas', 'EUR', 1111);
-acc1.deposit(300);
-acc1.withdraw(100);
-// acc1.movements = []; // it creates a brand new property! and thats not a problem!
+// acc1.deposit(300);
+// acc1.withdraw(100);
+const movements = acc1
+  .deposit(300)
+  .withdraw(100)
+  .withdraw(50)
+  .requestLoan(25000)
+  .withdraw(4000)
+  .getMovements();
+
 console.log(acc1);
-console.log(acc1.movements); // and here of course is no longer exist!
-// console.log(acc1.#movements); // => Uncaught SyntaxError: Private field '#movements' must be declared in an enclosing class
-
-// acc1.#approveLoan(323);
-
-Account.#test();
+// console.log(acc1.#movements);
+// Account.#test();
+console.log(movements);
