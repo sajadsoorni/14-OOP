@@ -460,7 +460,7 @@ jay.init('Jay', 2010, 'Computer Science');
 jay.introduce();
 jay.calcAge();
 */
-
+/*
 ///////////////////////////////////////
 // Another Class Example
 class Account {
@@ -506,3 +506,72 @@ acc1.approveLoan(1000);
 
 console.log(acc1);
 console.log(acc1.pin);
+*/
+
+///////////////////////////////////////
+// Encapsulation: Private Class Fields and Methods
+
+// 1) Public fields
+// 2) Private fields
+// 3) Public methods
+// 4) Private methods
+// STATIC version of these 4
+
+class Account {
+  locale = navigator.language;
+  bank = 'Bankist';
+  #movements = [];
+  #pin;
+
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    this.#pin = pin;
+
+    // this.movements = [];
+    // this.locale = navigator.language;
+
+    console.log(`Thanks for opening an account, ${owner}`);
+  }
+
+  // Public interface (API)
+  getMovements() {
+    return this.#movements;
+  }
+
+  deposit(val) {
+    this.#movements.push(val);
+  }
+
+  withdraw(val) {
+    this.deposit(-val);
+  }
+
+  #approveLoan(val) {
+    // Fake method
+    return true;
+  }
+
+  requestLoan(val) {
+    if (this.approveLoan(val)) {
+      this.deposit(val);
+      console.log(`Loan approved`);
+    }
+  }
+
+  static #test() {
+    console.log('TEST');
+  }
+}
+
+const acc1 = new Account('Jonas', 'EUR', 1111);
+acc1.deposit(300);
+acc1.withdraw(100);
+// acc1.movements = []; // it creates a brand new property! and thats not a problem!
+console.log(acc1);
+console.log(acc1.movements); // and here of course is no longer exist!
+// console.log(acc1.#movements); // => Uncaught SyntaxError: Private field '#movements' must be declared in an enclosing class
+
+// acc1.#approveLoan(323);
+
+Account.#test();
